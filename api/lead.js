@@ -1,32 +1,25 @@
-// /api/lead.js
 import fetch from "node-fetch";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ success: false, error: "Method not allowed" });
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyjw-Lr8BtGKQk2cN5JBZHjds9j8Zg1-BDmSsV3Yi3XGW420CdYA5DwmnqlUXK3uzpr/exec";
-
   try {
-    const response = await fetch(GOOGLE_SCRIPT_URL, {
-      method: "POST",
-      body: new URLSearchParams(req.body), // Google Script expects form-urlencoded
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    });
+    const formData = new URLSearchParams(req.body);
+    const response = await fetch(
+      "https://script.google.com/macros/s/AKfycbw9J-T8zHJd4qstUJBh-qh9AsarXaNgvELs_8EJqUJeObdOav8k8XhrXUeqKPPAnVzb/exec",
+      {
+        method: "POST",
+        body: formData
+      }
+    );
 
-    const text = await response.text(); // get raw text first
-    let json;
-    try {
-      json = JSON.parse(text); // try parsing JSON if script returns JSON
-    } catch {
-      json = { success: true, message: text }; // fallback: wrap raw text
-    }
+    const text = await response.text();
 
-    return res.status(200).json(json);
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.status(200).send(text);
   } catch (err) {
-    return res.status(500).json({ success: false, error: err.message });
+    res.status(500).json({ error: err.message });
   }
 }

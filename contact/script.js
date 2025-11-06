@@ -5,10 +5,11 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const data = new FormData(form);
+
   try {
-    const response = await fetch(form.action, {
+    const response = await fetch("/api/lead", {
       method: "POST",
-      body: data
+      body: new URLSearchParams(data)
     });
 
     const result = await response.json();
@@ -17,7 +18,7 @@ form.addEventListener("submit", async (e) => {
       successMsg.style.display = "block";
       form.reset();
     } else {
-      alert("Error: " + result.error);
+      alert("Error: " + (result.error || "Unknown error"));
     }
   } catch (err) {
     console.error("Form submission error:", err);
