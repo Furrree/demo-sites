@@ -33,3 +33,10 @@ form.addEventListener("submit", async (e) => {
     alert("Network error. Please try again.");
   }
 });
+const result = await res.json();
+if (result.success) {
+  successMsg.style.display = "block";
+  form.reset();
+} else {
+  alert("Error: " + (result.error || result.message || "Something went wrong"));
+}
