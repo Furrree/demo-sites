@@ -1,12 +1,18 @@
+// contact/script.js
 const form = document.getElementById("leadForm");
 const successMsg = document.getElementById("successMsg");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const formData = new FormData(form);
-  const data = {};
-  formData.forEach((value, key) => (data[key] = value));
+  const data = {
+    name: form.name.value,
+    email: form.email.value,
+    website: form.website.value,
+    type: form.type.value,
+    country: form.country.value,
+    honeypot: form.honeypot.value,
+  };
 
   try {
     const res = await fetch("/api/lead", {
@@ -14,15 +20,16 @@ form.addEventListener("submit", async (e) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-    const result = await res.json();
 
+    const result = await res.json();
     if (result.success) {
       successMsg.style.display = "block";
       form.reset();
     } else {
-      alert("Error submitting form: " + result.error);
+      alert("Error: " + (result.error || "Something went wrong"));
     }
   } catch (err) {
-    alert("Network error: " + err.message);
+    console.error("Form submission error:", err);
+    alert("Network error. Please try again.");
   }
 });
