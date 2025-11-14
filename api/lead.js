@@ -6,14 +6,14 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Read form data from request
+    // Read form data
     const buffers = [];
     for await (const chunk of req) buffers.push(chunk);
     const rawBody = Buffer.concat(buffers).toString();
 
-    // Send to Google Apps Script
+    // Forward to Google Apps Script
     const scriptRes = await fetch(
-      "https://script.google.com/macros/s/AKfycbz53BRfRBDQsPqn4zwV4GHak_DLXQeTIggebGJX3KI_M3oj_3UZEFb3RkZqUNy0VjGE/exec", // <-- replace this
+      "https://script.google.com/macros/s/AKfycbwUDQgcXyG7LchpsDk-HM-eHmfycGnIQGV9nkOYkMqZnpWHTal4loyWzL1nXpQLFHaf/exec",
       {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -22,11 +22,11 @@ export default async function handler(req, res) {
     );
 
     const text = await scriptRes.text();
+
     let data;
     try {
       data = JSON.parse(text);
     } catch {
-      // fallback if Apps Script sends plain text
       return res.status(500).json({ success: false, error: text });
     }
 

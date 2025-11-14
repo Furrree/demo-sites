@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact NovaSites Studio</title>
-  <link rel="icon" type="image/png" href="logo.png">
-  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <section class="contact">
 
-    <!-- ✨ Add your logo here -->
-    <img src="logo.png" alt="NovaSites Studio Logo" class="logo">
+    <img src="logo.png" alt="NovaSites Studio Logo" class="logo" />
 
     <h1>Let’s Build Your Website</h1>
     <p>Modern websites built fast and affordably — custom design, full support.</p>
 
-    <form id="leadForm" method="POST" action="https://script.google.com/macros/s/AKfycbw9J-T8zHJd4qstUJBh-qh9AsarXaNgvELs_8EJqUJeObdOav8k8XhrXUeqKPPAnVzb/exec">
-      <input name="name" placeholder="Your name" required>
-      <input name="email" type="email" placeholder="Email" required>
-      <input name="website" placeholder="Business website">
-      <input name="type" placeholder="Business type">
-      <input name="country" placeholder="Country">
+    <!-- IMPORTANT: No action here. JS handles the submit -->
+    <form id="leadForm">
+      <input name="name" placeholder="Your name" required />
+      <input name="email" type="email" placeholder="Email" required />
+      <input name="website" placeholder="Business website" />
+      <input name="type" placeholder="Business type" />
+      <input name="country" placeholder="Country" />
 
-      <!-- Invisible spam trap -->
-      <input type="text" name="honeypot" class="hidden">
+      <!-- Spam trap -->
+      <input type="text" name="honeypot" class="hidden" />
 
       <button type="submit">Send</button>
     </form>

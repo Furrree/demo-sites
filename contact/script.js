@@ -10,6 +10,7 @@ form.addEventListener("submit", async (e) => {
     const response = await fetch("/api/lead", {
       method: "POST",
       body: new URLSearchParams(data),
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
     });
 
     const result = await response.json();
