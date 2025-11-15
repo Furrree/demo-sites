@@ -4,13 +4,15 @@ const successMsg = document.getElementById("successMsg");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const data = new URLSearchParams(new FormData(form));
+  const body = new URLSearchParams(new FormData(form)).toString();
 
   try {
-    const response = await fetch("/api/lead", {
+    const response = await fetch("/.netlify/functions/lead", {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: data.toString(),
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body
     });
 
     const result = await response.json();
@@ -21,8 +23,8 @@ form.addEventListener("submit", async (e) => {
     } else {
       alert("Server error: " + result.error);
     }
-  } catch (err) {
-    console.error("Form submission error:", err);
+  } catch (error) {
+    console.error("Form submission error:", error);
     alert("Something went wrong. Please try again.");
   }
 });
