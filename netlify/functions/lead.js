@@ -8,7 +8,7 @@ exports.handler = async (event, context) => {
   // Raw body as sent by HTML form
   const rawBody = event.body;
 
-  const scriptUrl = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+  const scriptUrl = "https://script.google.com/macros/s/AKfycbyiQzHS_ej22mjgwE8ignbq9OyNIt_OPlwxbekTpCxeIZ6bY2cntGXpXjoPxmSdnmd7/exec";
 
   try {
     const result = await fetch(scriptUrl, {
