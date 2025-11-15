@@ -21,10 +21,10 @@ form.addEventListener("submit", async (e) => {
       successMsg.style.display = "block";
       form.reset();
     } else {
-      alert("Server error: " + result.error);
+      alert("Error: " + result.error);
     }
-  } catch (error) {
-    console.error("Form submission error:", error);
-    alert("Something went wrong. Please try again.");
+  } catch (err) {
+    alert("Something went wrong.");
+    console.error(err);
   }
 });
