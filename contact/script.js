@@ -4,13 +4,13 @@ const successMsg = document.getElementById("successMsg");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const data = new FormData(form);
+  const data = new URLSearchParams(new FormData(form));
 
   try {
     const response = await fetch("/api/lead", {
       method: "POST",
-      body: new URLSearchParams(data),
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: data.toString(),
     });
 
     const result = await response.json();

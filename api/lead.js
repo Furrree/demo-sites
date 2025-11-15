@@ -1,18 +1,19 @@
 import fetch from "node-fetch";
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ success: false, error: "Method not allowed" });
-  }
-
   try {
-    // Read raw URL-encoded form data
-    let rawBody = "";
-    for await (const chunk of req) rawBody += chunk;
+    if (req.method !== "POST") {
+      return res.status(405).json({ success: false, error: "Method not allowed" });
+    }
+
+    // Read URL-encoded form data
+    const buffers = [];
+    for await (const chunk of req) buffers.push(chunk);
+    const rawBody = Buffer.concat(buffers).toString();
 
     // Forward to Google Apps Script
     const scriptRes = await fetch(
-      "https://script.google.com/macros/s/AKfycbyIXaOufN_byLhMzAjh3bTbaekJjcJ-ijnmxgyklOPw9BSIKChJ2a4YbqP8Fz4wY8Vh/exec", // <-- your Apps Script URL
+      "https://script.google.com/macros/s/AKfycbyiQzHS_ej22mjgwE8ignbq9OyNIt_OPlwxbekTpCxeIZ6bY2cntGXpXjoPxmSdnmd7/exec", // <-- replace with your script ID
       {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -22,11 +23,11 @@ export default async function handler(req, res) {
 
     const text = await scriptRes.text();
 
+    // Always return JSON
     try {
       const data = JSON.parse(text);
       return res.status(200).json(data);
     } catch {
-      // If Apps Script returns plain text or error, return JSON
       return res.status(200).json({ success: false, error: text });
     }
 
